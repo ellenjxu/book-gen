@@ -99,8 +99,8 @@ export default function Home() {
     <main>
       <div className="flex justify-center  py-16 h-screen">
         <div className="max-w-2xl w-full">
-          <div className="rounded p-8 max-h-full overflow-hidden">
-            <div className="w-full space-y-4 max-h-full overflow-y-auto">
+          <div className="rounded p-8  overflow-hidden">
+            <div className="w-full space-y-4  overflow-y-auto text-xl">
               {elements.map((element, index) => {
                 if (element.type === "text") {
                   return <FadeInText key={index} text={element.content + "."} />

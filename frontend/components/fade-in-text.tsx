@@ -7,7 +7,7 @@ export function FadeInText({ text }: { text: string }) {
   return <p>
     {chars.map((c, i) => (
       <span key={i}  style={{
-        fontWeight: "500",
+        fontWeight: "600",
         // fontVariationSettings: "wght 500",
         animation: 'fadein 100ms ease-in-out forwards',
         opacity: 0,
