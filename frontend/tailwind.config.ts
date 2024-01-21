@@ -15,7 +15,7 @@ const config: Config = {
       },
       keyframes: {
         wiggle: {
-          '0%, 100%': { transform: 'rotate(-50deg)' },
+          '0%': {  },
           '50%': { transform: 'rotate(50deg)' },
         }
       },

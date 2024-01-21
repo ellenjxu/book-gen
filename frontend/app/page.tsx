@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Sen } from "next/font/google";
 import { FadeInText } from "@/components/fade-in-text";
 
 const excerpt = `
@@ -62,10 +61,9 @@ Paul sensed his own tensions, decided to practice one of the mind-body lessons h
 `
 
 interface Element {
-  type: String
-  content: String
+  type: string
+  content: string
 }
-
 
 const ALL_SENTENCES = excerpt.split(".")
 export default function Home() {
@@ -75,13 +73,19 @@ export default function Home() {
   const text = excerpt.slice(0, 2000)
 
   useEffect(() => {
-    const keyDownHandler = (e: KeyboardEvent) => {
-      console.log(`You pressed ${e.code}.`);
+    const keyDownHandler = async (e: KeyboardEvent) => {
       if (e.code === "Space") {
-        setElements([...elements, {type: "text", content: ALL_SENTENCES[sentenceIndex]}])
+        setElements(elements => [...elements, { type: "text", content: ALL_SENTENCES[sentenceIndex] }])
         setSentenceIndex(sentenceIndex => sentenceIndex + 1)
       } else if (e.code === "KeyQ") {
-        setElements([...elements, {type: "image", content: "image!!!"}])
+        console.log("creating new image")
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          body: ALL_SENTENCES[sentenceIndex]
+        })
+        const data = await response.json()
+        setElements(elements => [...elements, { type: "image", content: data.replicateUrl }])
+        console.log(data)
       }
     }
     document.addEventListener("keydown", keyDownHandler);
@@ -95,13 +99,16 @@ export default function Home() {
     <main>
       <div className="flex justify-center  py-16 h-screen">
         <div className="max-w-2xl w-full">
-          <div className="border rounded p-8 max-h-full overflow-hidden">
+          <div className="rounded p-8 max-h-full overflow-hidden">
             <div className="w-full space-y-4 max-h-full overflow-y-auto">
               {elements.map((element, index) => {
                 if (element.type === "text") {
-                  return <p key={index}>{element.content}</p>
+                  return <FadeInText key={index} text={element.content + "."} />
+                  // return <p key={index}>{element.content}</p>
                 } else if (element.type === "image") {
-                  return <p key={index}>{"image:" + element.content}</p>
+                  return <div key={index} className="w-48 h-48">
+                    <img alt="generated image" src={element.content} />
+                  </div>
                 }
               })}
 
