@@ -30,7 +30,7 @@ def generate_image(prompt):
     try:
         response = client.images.generate(
             model="dall-e-3",
-            prompt=prompt + " In the style of sketchbook watercolor art on a white canvas, fade out with splashes of watercolor and leave all four margins white",
+            prompt="minimalistic chinese ink wash painting on a blank canvas, fade out into white background on the borders, of " + prompt,
             size="1024x1024",
             quality="standard",
             n=1,
