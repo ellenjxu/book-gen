@@ -65,7 +65,7 @@ interface Element {
   content: string
 }
 
-const ALL_SENTENCES = excerpt.split(".")
+const ALL_SENTENCES = excerpt.split("\n\n")
 export default function Home() {
 
   const [elements, setElements] = useState<Element[]>([])
@@ -79,9 +79,10 @@ export default function Home() {
         setSentenceIndex(sentenceIndex => sentenceIndex + 1)
       } else if (e.code === "KeyQ") {
         console.log("creating new image")
+        //setElements(elements => [...elements, { type: "image", content: data.replicateUrl }])
         const response = await fetch("/api/generate", {
           method: "POST",
-          body: ALL_SENTENCES[sentenceIndex]
+          body: ALL_SENTENCES[sentenceIndex-1]
         })
         const data = await response.json()
         setElements(elements => [...elements, { type: "image", content: data.replicateUrl }])
@@ -103,11 +104,11 @@ export default function Home() {
             <div className="w-full space-y-4  overflow-y-auto text-xl">
               {elements.map((element, index) => {
                 if (element.type === "text") {
-                  return <FadeInText key={index} text={element.content + "."} />
+                  return <FadeInText key={index} text={element.content} />
                   // return <p key={index}>{element.content}</p>
                 } else if (element.type === "image") {
                   return <div key={index} className="w-48 h-48">
-                    <img alt="generated image" src={element.content} />
+                    <img alt="generated image" src={element.content} style={{ animation: 'enterdown 750ms ease-in-out forwards', opacity: 0 }} />
                   </div>
                 }
               })}
