@@ -1,5 +1,8 @@
-# book-gen
+# BookGen
 
-generate interactive scenes from books!!
+Generate interactive scenes from books
 
-inspiration: "foundations" synthesizer for live sound/image books, young lady's illustrated primer
+## Demo
+
+https://github.com/ellenjxu/book-gen/assets/56745453/698e65ef-e35d-41bd-bc90-22fd7ae0325d
+
